@@ -66,7 +66,7 @@ fs.readdirSync('src').forEach(file => {
     
   const browser = await puppeteer.launch({ headless: true });
   
-  let emojiToFetch = 2750;
+  let emojiToFetch = 0;
   getEmoji(emojiLinks[emojiToFetch]);
   
   for(let i=0; i<9; i++) {
