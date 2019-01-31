@@ -94,8 +94,8 @@ fs.readdirSync('src').forEach(file => {
   let emojiToFetch = 0;
   getEmoji(emojiLinks[emojiToFetch]);
   
-  // for(let i=0; i<9; i++) {
-  //   emojiToFetch = emojiToFetch + 1;
-  //   getEmoji(emojiLinks[emojiToFetch]);
-  // }
+  for(let i=0; i<9; i++) {
+    emojiToFetch = emojiToFetch + 1;
+    getEmoji(emojiLinks[emojiToFetch]);
+  }
 })()
