@@ -1,0 +1,13 @@
+{
+  "name": "emojicdn",
+  "description": "A fast, global content delivery network for Apple emojis.",
+  "scripts": {
+    "build": "rm -rf site && node build.js"
+  },
+  "author": "Ben Borgers (https://benborgers.com)",
+  "license": "MIT",
+  "dependencies": {
+    "node-fetch": "^2.3.0",
+    "puppeteer": "^1.11.0"
+  }
+}
