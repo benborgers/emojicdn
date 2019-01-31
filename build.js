@@ -51,8 +51,8 @@ fs.readdirSync('src').forEach(file => {
         
         dest.on('finish', () => {
           page.close();
-          console.log(`Downloaded ${emoji}`)
           emojiToFetch = emojiToFetch + 1;
+          console.log(`Downloaded ${emoji}`)
           
           if(emojiToFetch < emojiLinks.length) {
             getEmoji(emojiLinks[emojiToFetch]);
@@ -60,7 +60,6 @@ fs.readdirSync('src').forEach(file => {
             console.log(`Done! Exiting now.`);
             process.exit();
           }
-          
         })
       })
   }
@@ -68,6 +67,9 @@ fs.readdirSync('src').forEach(file => {
   const browser = await puppeteer.launch({ headless: true });
   
   let emojiToFetch = 0;
-  
+  getEmoji(emojiLinks[emojiToFetch]);
+  emojiToFetch = emojiToFetch + 1;
+  getEmoji(emojiLinks[emojiToFetch]);
+  emojiToFetch = emojiToFetch + 1;
   getEmoji(emojiLinks[emojiToFetch]);
 })()
