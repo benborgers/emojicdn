@@ -20,6 +20,8 @@ fs.readdirSync('src').forEach(file => {
   }
 });
 
+const blacklist = ['#️⃣'];
+
 (async () => {
   let emojiLinks = [];
   await fetch('https://emojipedia.org/apple/')
@@ -66,26 +68,31 @@ fs.readdirSync('src').forEach(file => {
     fetch(url)
       .then(res => res.text())
       .then(res => {
-        const emoji = res.split('<title>')[1].split(' ')[0];
-        let imageUrl = /srcset="(?<imageUrl>.*?)"/.exec(res).groups.imageUrl;
-        
-        fetch(imageUrl)
-          .then(res => {
-            const dest = fs.createWriteStream(`site/${emoji}.png`);
-            res.body.pipe(dest);
-            
-            dest.on('finish', () => {
-              emojiToFetch = emojiToFetch + 1;
-              console.log(`Downloaded ${emoji} (${emojiToFetch}/${emojiLinks.length})`);
+        const emoji = res.split('<title>')[1].split(' ')[0].trim();
+        if(!blacklist.includes(emoji)) {
+          let imageUrl = /srcset="(?<imageUrl>.*?)"/.exec(res).groups.imageUrl;
+          
+          fetch(imageUrl)
+            .then(res => {
+              const dest = fs.createWriteStream(`site/${emoji}.png`);
+              res.body.pipe(dest);
               
-              if(emojiToFetch < emojiLinks.length) {
-                getEmoji(emojiLinks[emojiToFetch]);
-              } else {
-                console.log(`Done! Site built.`);
-                process.exit();
-              }
+              dest.on('finish', () => {
+                emojiToFetch = emojiToFetch + 1;
+                console.log(`Downloaded ${emoji} (${emojiToFetch}/${emojiLinks.length})`);
+                
+                if(emojiToFetch < emojiLinks.length) {
+                  getEmoji(emojiLinks[emojiToFetch]);
+                } else {
+                  console.log(`Done! Site built.`);
+                  process.exit();
+                }
+              })
             })
-          })
+        } else {
+          emojiToFetch = emojiToFetch + 1;
+          getEmoji(emojiLinks[emojiToFetch]);
+        }
       })
   }
     
