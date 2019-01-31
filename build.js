@@ -52,7 +52,7 @@ fs.readdirSync('src').forEach(file => {
         dest.on('finish', () => {
           page.close();
           emojiToFetch = emojiToFetch + 1;
-          console.log(`Downloaded ${emoji}`)
+          console.log(`Downloaded ${emoji} (${emojiToFetch}/${emojiLinks.length})`)
           
           if(emojiToFetch < emojiLinks.length) {
             getEmoji(emojiLinks[emojiToFetch]);
