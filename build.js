@@ -70,7 +70,7 @@ const blacklist = ['#️⃣'];
       .then(res => {
         const emoji = res.split('<title>')[1].split(' ')[0].trim();
         if(!blacklist.includes(emoji)) {
-          let imageUrl = /srcset="(?<imageUrl>.*?)"/.exec(res).groups.imageUrl;
+          let imageUrl = /srcset="(?<imageUrl>.*?)"/.exec(res).groups.imageUrl.replace(' 2x', '');
           
           fetch(imageUrl)
             .then(res => {
