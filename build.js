@@ -36,12 +36,15 @@ const blacklist = ['#️⃣'];
         }
       })
     })
+
+  const emojiArray = [] 
     
   const getEmoji = async url => {
     fetch(url)
       .then(res => res.text())
       .then(res => {
         const emoji = res.split('<title>')[1].split(' ')[0].trim();
+        emojiArray.push(emoji)
         if(!blacklist.includes(emoji)) {
           let imageUrl = /srcset="(?<imageUrl>.*?)"/.exec(res).groups.imageUrl.replace(' 2x', '');
           
@@ -58,6 +61,7 @@ const blacklist = ['#️⃣'];
                   getEmoji(emojiLinks[emojiToFetch]);
                 } else {
                   console.log(`Done! Site built.`);
+                  fs.writeFileSync(`site/list.json`, JSON.stringify(emojiArray))
                   process.exit();
                 }
               })

@@ -54,7 +54,7 @@ ul {
   list-style-position: inside;
 }
 
-ul a {
+a {
   color: #00449e;
   text-decoration: none;
   letter-spacing: .1px;
