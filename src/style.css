@@ -69,6 +69,11 @@ a {
   text-align: center;
 }
 
+.footer a {
+  color: inherit;
+  text-decoration: underline;
+}
+
 @media (max-width: 768px) {
   h1 {
     margin: 48px 0;
