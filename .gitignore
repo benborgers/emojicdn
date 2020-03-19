@@ -2,3 +2,4 @@ node_modules
 site
 .DS_Store
 .netlify
+.now
