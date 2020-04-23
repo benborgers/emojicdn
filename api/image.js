@@ -16,6 +16,7 @@ module.exports = async (req, res) => {
   const src = text.match(/<img.*srcset="(?<src>.+?)"/).groups.src.split(" ")[0]
   const image = await fetch(src)
 
+  res.setHeader("content-type", "image/png")
   res.setHeader("cache-control", "s-maxage=31000000") // cache on CDN for one year (the max)
   image.body.pipe(res)
 }
