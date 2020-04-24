@@ -30,7 +30,7 @@ module.exports = async (req, res) => {
   if (!style) style = "apple"
   if (!allowedStyles.includes(style.toLowerCase()))
     return send400Error("Invalid style.")
-  const re = new RegExp(`<img.*src="(\\S.*?${style.toLowerCase()}\\S.*?)"`, 'g'); // find style within img src url
+  const re = new RegExp(`<img.*src.*="(\\S.*?${style.toLowerCase()}\\S.*?)"`, "g"); // find style within img src/srcset url
 
   const request = await fetch(`https://emojipedia.org/${encodeURIComponent(emoji)}`)
   if (!request.ok)
@@ -40,7 +40,8 @@ module.exports = async (req, res) => {
   const urlArray = text.match(re)
   if (!urlArray)
     return send404Error("Style not found for this emoji.")
-  const url = urlArray[0].replace(/<img src=/g, "").replace(/"/g, "")
+  const url = urlArray[0].match(/src.*?="(.*?)"/g).reverse()[0].replace(/src.*=/g, "").replace(/"/g, "").replace(" 2x", "")
+    // take the last src/srcset url, since that's the highest quality
   const image = await fetch(url)
 
   res.setHeader("content-type", "image/png")
