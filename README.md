@@ -8,7 +8,7 @@ Append any emoji to the end of `emojicdn.elk.sh` to get a PNG image:
 <img src="https://emojicdn.elk.sh/🥳" />
 ```
 
-## `style`
+## Emoji style
 
 For more control, add the `style` query parameter to specify an emoji platform: 
 
