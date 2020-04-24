@@ -20,17 +20,17 @@ module.exports = async (req, res) => {
   ]
 
   const send404Error = error => {
-    res.status(404).send(`${error}`)
+    res.status(404).send(error)
   }
 
   const send400Error = error => {
-    res.status(400).send(`${error}`)
+    res.status(400).send(error)
   }
 
   if (!style) style = "apple"
-  const re = new RegExp(`<img.*src="(\\S.*?${style.toLowerCase()}\\S.*?)"`, 'g'); // find style within url link
   if (!allowedStyles.includes(style.toLowerCase()))
     return send400Error("Invalid style.")
+  const re = new RegExp(`<img.*src="(\\S.*?${style.toLowerCase()}\\S.*?)"`, 'g'); // find style within img src url
 
   const request = await fetch(`https://emojipedia.org/${encodeURIComponent(emoji)}`)
   if (!request.ok)
@@ -39,7 +39,7 @@ module.exports = async (req, res) => {
   const text = await request.text()
   const urlArray = text.match(re)
   if (!urlArray)
-    return send404Error("Style for emoji not found")
+    return send404Error("Style not found for this emoji.")
   const url = urlArray[0].replace(/<img src=/g, "").replace(/"/g, "")
   const image = await fetch(url)
 
