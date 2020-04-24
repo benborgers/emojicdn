@@ -1,20 +1,50 @@
 const fetch = require("node-fetch")
 
 module.exports = async (req, res) => {
-  const { emoji } = req.query
+  let { emoji, style } = req.query
+  const allowedStyles = [
+    "apple",
+    "google",
+    "microsoft",
+    "samsung",
+    "whatsapp",
+    "twitter",
+    "facebook",
+    "joypixels",
+    "openmoji",
+    "emojidex",
+    "messenger",
+    "lg",
+    "htc",
+    "mozilla"
+  ]
 
-  const sendError = () => {
+  const send404Error = error => {
     res.setHeader("content-type", "text/plain")
-    res.status(404)
-    res.send("Emoji not found.")
+    res.status(404).send(error)
   }
 
+  const send400Error = error => {
+    res.setHeader("content-type", "text/plain")
+    res.status(400).send(error)
+  }
+
+  if (!style) style = "apple"
+  if (!allowedStyles.includes(style.toLowerCase()))
+    return send400Error("Invalid style.")
+  const re = new RegExp(`<img.*src.*="(\\S.*?${style.toLowerCase()}\\S.*?)"`, "g"); // find style within img src/srcset url
+
   const request = await fetch(`https://emojipedia.org/${encodeURIComponent(emoji)}`)
-  if(!request.ok) return sendError()
+  if (!request.ok)
+    return send404Error("Emoji not found.")
 
   const text = await request.text()
-  const src = text.match(/<img.*srcset="(?<src>.+?)"/).groups.src.split(" ")[0]
-  const image = await fetch(src)
+  const urlArray = text.match(re)
+  if (!urlArray)
+    return send404Error("Style not found for this emoji.")
+  const url = urlArray[0].match(/src.*?="(.*?)"/g).reverse()[0].replace(/src.*=/g, "").replace(/"/g, "").replace(" 2x", "")
+    // take the last src/srcset url, since that's the highest quality
+  const image = await fetch(url)
 
   res.setHeader("content-type", "image/png")
   res.setHeader("cache-control", "s-maxage=31000000") // cache on CDN for one year (the max)
