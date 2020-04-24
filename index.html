@@ -3,7 +3,7 @@
   <head>
     <title>EMOJICDN</title>
     <link rel="icon" href="/🥳">
-    <meta name="description" content="An API for getting PNG images of Apple emojis.">
+    <meta name="description" content="An API for getting PNG images of emojis.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 
@@ -96,13 +96,20 @@
         font: inherit;
         text-decoration-color: var(--underline);
       }
+
+      code {
+        color: inherit;
+        font-family: "SFMono-Regular", Menlo, monospace;
+        font-weight: 600;
+        font-size: inherit;
+      }
     </style>
   </head>
 
   <body>
     <main>
       <p class="logo">EMOJICDN</p>
-      <h1>Get PNG images of Apple emojis.</h1>
+      <h1>Get PNG images of emojis.</h1>
 
       <div class="chips">
         <p>Free</p>
@@ -112,15 +119,15 @@
 
       <div class="instructions">
         <p>
-          Just append the emoji you want to this URL. For example: <a href="https://emojicdn.elk.sh/🥳">emojicdn.elk.sh/🥳</a>.
+          Just append the emoji you want to this URL. For example: <a href="/🥳">emojicdn.elk.sh/🥳</a>.
         </p>
 
         <p>
-          You can directly use that URL as an image.
+          Add a <code>?style=</code> query parameter to choose which platform (Apple, Google, Twitter, etc.) to get the emoji from - more details in the <a href="https://github.com/benborgers/emojicdn">README</a>.
         </p>
 
         <p>
-          This API comes in handy for favicons, or for using Apple's emojis across platforms (since their artwork looks the nicest), etc. 
+          This API comes in handy for favicons, using emojis across platforms, and for user-generated content.
         </p>
 
         <p>
