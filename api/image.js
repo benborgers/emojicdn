@@ -20,10 +20,12 @@ module.exports = async (req, res) => {
   ]
 
   const send404Error = error => {
+    res.setHeader("content-type", "text/plain")
     res.status(404).send(error)
   }
 
   const send400Error = error => {
+    res.setHeader("content-type", "text/plain")
     res.status(400).send(error)
   }
 
