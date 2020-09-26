@@ -4,6 +4,6 @@
   "author": "Ben Borgers (https://benborgers.com)",
   "license": "MIT",
   "dependencies": {
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.1"
   }
 }
