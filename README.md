@@ -30,7 +30,6 @@ Supported styles:
 * `joypixels`
 * `openmoji`
 * `emojidex`
-* `messenger`
 * `lg`
 * `htc`
 * `mozilla`

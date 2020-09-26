@@ -13,7 +13,6 @@ module.exports = async (req, res) => {
     "joypixels",
     "openmoji",
     "emojidex",
-    "messenger",
     "lg",
     "htc",
     "mozilla"

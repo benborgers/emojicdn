@@ -3,3 +3,4 @@ site
 .DS_Store
 .netlify
 .now
+.vercel
