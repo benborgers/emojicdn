@@ -1,5 +1,10 @@
 {
   "rewrites": [
     { "source": "/(.*)", "destination": "/api/image?emoji=$1" }
-  ]
+  ],
+  "functions": {
+    "api/image.js": {
+      "maxDuration": 3
+    }
+  }
 }
