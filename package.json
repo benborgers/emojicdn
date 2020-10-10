@@ -1,9 +1,0 @@
-{
-  "name": "emojicdn",
-  "description": "A fast, global content delivery network for Apple emojis.",
-  "author": "Ben Borgers (https://benborgers.com)",
-  "license": "MIT",
-  "dependencies": {
-    "node-fetch": "^2.6.1"
-  }
-}
