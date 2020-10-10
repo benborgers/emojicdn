@@ -41,11 +41,13 @@ class EmojiController extends Controller
                 );
             }
 
+            $client = Http::timeout(3);
+
             if(! in_array($style, $this->allowedStyles)) {
                 error('Invalid style. Valid styles are: ' . implode(', ', $this->allowedStyles), 400);
             }
 
-            $response = Http::get('https://emojipedia.org/' . $encodedEmoji);
+            $response = $client->get('https://emojipedia.org/' . $encodedEmoji);
             if(! $response->ok()) {
                 error('Emojipedia returned an error ' . $response->status(), $response->status());
             }
@@ -59,7 +61,7 @@ class EmojiController extends Controller
             $url = (string) Str::of($matches->first())->replace('2x', '')->trim();
 
             return base64_encode(
-                Http::get($url)->body()
+                $client->get($url)->body()
             );
         });
 
