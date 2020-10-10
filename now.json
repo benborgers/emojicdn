@@ -1,6 +1,6 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/api/image?emoji=$1" }
+    { "source": "/(.*)", "destination": "https://cold-tundra-oq7amnfwtyd2.vapor-farm-c1.com/$1" }
   ],
   "functions": {
     "api/image.js": {
