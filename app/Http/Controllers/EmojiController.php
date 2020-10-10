@@ -34,19 +34,26 @@ class EmojiController extends Controller
         $cacheFor = 60 * 60 * 24 * 7; // 7 days
 
         $image = Cache::remember($hash, $cacheFor, function () use ($encodedEmoji, $style) {
+            function error($message, $status) {
+                abort(
+                    response($message, $status)
+                        ->header('content-type', 'text/plain')
+                );
+            }
+
             if(! in_array($style, $this->allowedStyles)) {
-                abort(400, 'Invalid style. Valid styles are: ' . implode(', ', $this->allowedStyles));
+                error('Invalid style. Valid styles are: ' . implode(', ', $this->allowedStyles), 400);
             }
 
             $response = Http::get('https://emojipedia.org/' . $encodedEmoji);
             if(! $response->ok()) {
-                abort($response->status());
+                error('Emojipedia returned an error ' . $response->status(), $response->status());
             }
 
             $matches = Str::of($response->body())->matchAll("/<img.*(?:src|srcset)=\"(.*?{$style}.*?)\"/");
 
             if($matches->isEmpty()) {
-                abort(404);
+                error('Emoji exists, but style couldn’t be found', 404);
             }
 
             $url = (string) Str::of($matches->first())->replace('2x', '')->trim();
