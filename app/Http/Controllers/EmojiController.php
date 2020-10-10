@@ -51,7 +51,7 @@ class EmojiController extends Controller
 
             $url = (string) Str::of($matches->first())->replace('2x', '')->trim();
 
-            return Http::get($url)->body();
+            return (string) Http::get($url)->body();
         });
 
         return response($image)
