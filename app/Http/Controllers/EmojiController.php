@@ -40,7 +40,7 @@ class EmojiController extends Controller
 
             $response = Http::get('https://emojipedia.org/' . $encodedEmoji);
             if(! $response->ok()) {
-                abort($resonse->status());
+                abort($response->status());
             }
 
             $matches = Str::of($response->body())->matchAll("/<img.*(?:src|srcset)=\"(.*?{$style}.*?)\"/");
