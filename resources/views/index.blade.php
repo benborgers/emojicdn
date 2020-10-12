@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>EMOJICDN</title>
+        <link rel="icon" href="/🥳">
+        <meta name="description" content="An API for getting PNG images of emojis.">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+
+        <style>
+            :root {
+                --text-primary: hsl(235, 30%, 10%);
+                --text-secondary: hsl(235, 10%, 40%);
+                --text-chip: hsl(235, 40%, 30%);
+                --background: hsl(235, 46%, 90%);
+                --underline: hsl(235, 30%, 80%);
+            }
+            * {
+                font-family: "Inter", sans-serif;
+                font-weight: 400;
+                font-size: 16px;
+                color: var(--text-secondary);
+                margin: 0;
+                padding: 0;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+
+            body {
+                background-color: var(--background);
+                min-height: 80vh;
+                display: grid;
+                grid-template-columns: minmax(16px, 1fr) minmax(0, 512px) minmax(16px, 1fr);
+            }
+
+            ::selection {
+                background-color: var(--background);
+                color: var(--text-primary);
+            }
+
+            main {
+                grid-column: 2;
+                align-self: center;
+                padding: 24px;
+                background-color: white;
+                border-radius: 4px;
+                margin: 16px 0;
+                box-shadow:
+                    2px 2.8px 2.2px rgba(0, 0, 0, 0.02),
+                    4px 6.7px 5.3px rgba(0, 0, 0, 0.028),
+                    8px 12.5px 10px rgba(0, 0, 0, 0.035),
+                    15px 22.3px 17.9px rgba(0, 0, 0, 0.042),
+                    25px 41.8px 33.4px rgba(0, 0, 0, 0.05),
+                    30px 100px 80px rgba(0, 0, 0, 0.07);
+            }
+
+            .logo {
+                font-weight: 600;
+                margin-bottom: 4px;
+                letter-spacing: -0.5px;
+                font-size: 16px;
+            }
+
+            h1 {
+                font-size: 28px;
+                margin-bottom: 32px;
+                color: var(--text-primary);
+                font-weight: 600;
+                line-height: 1.3;
+            }
+
+            .chips > p{
+                font-weight: 600;
+                background-color: var(--background);
+                color: var(--text-chip);
+                padding: 4px 8px;
+                max-width: max-content;
+                border-radius: 2px;
+                margin-right: 8px;
+                margin-bottom: 8px;
+                display: inline-block;
+                font-size: 14px;
+            }
+
+            .instructions {
+                margin-top: 32px;
+            }
+
+            p {
+                line-height: 1.5;
+                margin-bottom: 12px;
+                font-size: 18px;
+            }
+
+            a {
+                font: inherit;
+                text-decoration-color: var(--underline);
+            }
+
+            code {
+                color: inherit;
+                font-family: "SFMono-Regular", Menlo, monospace;
+                font-weight: 600;
+                font-size: inherit;
+            }
+        </style>
+    </head>
+
+    <body>
+        <main>
+            <p class="logo">EMOJICDN</p>
+            <h1>Get PNG images of emojis.</h1>
+
+            <div class="chips">
+                <p>Free</p>
+                <p>Dead simple</p>
+                <p>Useful, I promise</p>
+            </div>
+
+            <div class="instructions">
+                <p>
+                    Just append the emoji you want to this URL. For example: <a href="/🥳">emojicdn.elk.sh/🥳</a>.
+                </p>
+
+                <p>
+                    Add a <code>?style=</code> query parameter to choose which platform (Apple, Google, Twitter, etc.) to get the emoji from - more details in the <a href="https://github.com/benborgers/emojicdn">README</a>.
+                </p>
+
+                <p>
+                    This API comes in handy for favicons, using emojis across platforms, and for user-generated content.
+                </p>
+
+                <p>
+                    The source code for this project is <a href="https://github.com/benborgers/emojicdn">on GitHub</a>.
+                </p>
+            </div>
+        </main>
+    </body>
+</html>
