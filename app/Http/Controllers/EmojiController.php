@@ -25,47 +25,73 @@ class EmojiController extends Controller
         'mozilla'
     ];
 
+    // Epoch timestamp. 
+    // Emojis that were cached after this time are considered "fresh". 
+    // This time can be moved up to force update old cached emojis. 
+    public $cacheFreshAfter = 0;
+
     public function show($emoji)
     {
         $encodedEmoji = urlencode($emoji);
         $style = request()->query('style', 'apple');
         $hash = md5(implode('.', [$encodedEmoji, $style]));
 
-        $cacheFor = 60 * 60 * 24 * 7; // 7 days
-
-        $image = Cache::remember($hash, $cacheFor, function () use ($encodedEmoji, $style) {
-            function error($message, $status) {
-                abort(
-                    response($message, $status)
-                        ->header('content-type', 'text/plain')
-                );
+        // Deletes any items cached before the datatype was an array with a timestamp. 
+        // This check can be removed once all old cached items with no timestamp have expired. 
+        if($cachedValue = cache()->get($hash)) {
+            if(gettype($cachedValue) === 'string') {
+                cache()->forget($hash);
             }
+        }
 
-            $client = Http::timeout(3);
+        $cachedValue = cache()->get($hash);
 
-            if(! in_array($style, $this->allowedStyles)) {
-                error('Invalid style. Valid styles are: ' . implode(', ', $this->allowedStyles), 400);
-            }
+        // We can use the cached value if it exists,
+        // and it was downloaded more recently than the freshness cutoff. 
 
-            $response = $client->get('https://emojipedia.org/' . $encodedEmoji);
-            if(! $response->ok()) {
-                error('Emojipedia returned an error ' . $response->status(), $response->status());
-            }
+        if($cachedValue && $cachedValue['timestamp'] > $this->cacheFreshAfter) {
+            return response(base64_decode($cachedValue['image']))
+                ->header('content-type', 'image/png');
+        }
 
-            $matches = Str::of($response->body())->matchAll("/<img.*(?:src|srcset)=\"(.*?{$style}.*?)\"/");
+        // If we can't use the cached value: 
 
-            if($matches->isEmpty()) {
-                error('Emoji exists, but style couldn’t be found', 404);
-            }
-
-            $url = (string) Str::of($matches->first())->replace('2x', '')->trim();
-
-            return base64_encode(
-                $client->get($url)->body()
+        function error($message, $status) {
+            abort(
+                response($message, $status)
+                    ->header('content-type', 'text/plain')
             );
-        });
+        }
 
-        return response(base64_decode($image))
+        $client = Http::timeout(3);
+
+        if(! in_array($style, $this->allowedStyles)) {
+            error('Invalid style. Valid styles are: ' . implode(', ', $this->allowedStyles), 400);
+        }
+
+        $response = $client->get('https://emojipedia.org/' . $encodedEmoji);
+        if(! $response->ok()) {
+            error('Emojipedia returned an error ' . $response->status(), $response->status());
+        }
+
+        $matches = Str::of($response->body())->matchAll("/<img.*(?:src|srcset)=\"(.*?{$style}.*?)\"/");
+
+        if($matches->isEmpty()) {
+            error('Emoji exists, but style couldn’t be found', 404);
+        }
+
+        $url = (string) Str::of($matches->first())->replace('2x', '')->trim();
+
+        $emojiImage = $client->get($url)->body();
+
+        $base64Image = base64_encode($emojiImage);
+
+        cache()->put($hash, [
+            'timestamp' => now()->timestamp,
+            'image' => $base64Image
+        ]);
+
+        return response($emojiImage)
             ->header('content-type', 'image/png');
     }
 }
