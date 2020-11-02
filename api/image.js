@@ -2,21 +2,23 @@ const fetch = require("node-fetch")
 
 module.exports = async (req, res) => {
   let { emoji, style } = req.query
-  const allowedStyles = [
-    "apple",
-    "google",
-    "microsoft",
-    "samsung",
-    "whatsapp",
-    "twitter",
-    "facebook",
-    "joypixels",
-    "openmoji",
-    "emojidex",
-    "lg",
-    "htc",
-    "mozilla"
-  ]
+  const allowedStyles = {
+    "apple": 237,
+    "google": 263,
+    "microsoft": 209,
+    "messenger": 65,
+    "samsung": 265,
+    "whatsapp": 268,
+    "twitter": 259,
+    "facebook": 230,
+    "joypixels": 257,
+    "openmoji": 252,
+    "emojidex": 112,
+    "lg": 57,
+    "htc": 122,
+    "mozilla": 36,
+    "softbank": 145
+  }
 
   const send404Error = error => {
     res.setHeader("content-type", "text/plain")
@@ -29,9 +31,12 @@ module.exports = async (req, res) => {
   }
 
   if (!style) style = "apple"
-  if (!allowedStyles.includes(style.toLowerCase()))
+  style = style.toLowerCase()
+  if (!allowedStyles[style])
     return send400Error("Invalid style.")
-  const re = new RegExp(`<img.*src.*="(\\S.*?${style.toLowerCase()}\\S.*?)"`, "g"); // find style within img src/srcset url
+
+  // convert emoji to hex and use style number from emojipedia to find style within img srcset url
+  const re = new RegExp(`srcset="(.+\/${allowedStyles[style]}.+${emoji.codePointAt(0).toString(16)}.+?png) 2x"`, "g");
 
   const request = await fetch(`https://emojipedia.org/${encodeURIComponent(emoji)}`)
   if (!request.ok)
@@ -42,7 +47,7 @@ module.exports = async (req, res) => {
   if (!urlArray)
     return send404Error("Style not found for this emoji.")
   const url = urlArray[0].match(/src.*?="(.*?)"/g).reverse()[0].replace(/src.*=/g, "").replace(/"/g, "").replace(" 2x", "")
-    // take the last src/srcset url, since that's the highest quality
+  // take the last src/srcset url, since that's the highest quality
   const image = await fetch(url)
 
   res.setHeader("content-type", "image/png")
