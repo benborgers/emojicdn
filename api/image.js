@@ -29,6 +29,7 @@ module.exports = async (req, res) => {
   }
 
   if (!style) style = "apple"
+  if (style.toLowerCase() == "messenger") style = "facebook/65"
   if (!allowedStyles.includes(style.toLowerCase()))
     return send400Error("Invalid style.")
   const re = new RegExp(`<img.*src.*="(\\S.*?${style.toLowerCase()}\\S.*?)"`, "g"); // find style within img src/srcset url
