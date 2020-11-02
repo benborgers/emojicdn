@@ -10,6 +10,7 @@ module.exports = async (req, res) => {
     "whatsapp",
     "twitter",
     "facebook",
+    "facebook/65",
     "joypixels",
     "openmoji",
     "emojidex",
