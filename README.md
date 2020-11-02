@@ -10,19 +10,20 @@ Append any emoji to the end of `emojicdn.elk.sh` to get a PNG image:
 
 ## Emoji style
 
-For more control, add the `style` query parameter to specify an emoji platform: 
+For more control, add the `style` query parameter to specify an emoji platform:
 
 ```
 <img src="https://emojicdn.elk.sh/🥳?style=google" />
 ```
 
-If no `style` is provided, the API defaults to `apple`. 
+If no `style` is provided, the API defaults to `apple`.
 
-Supported styles: 
+Supported styles:
 
 * `apple`
 * `google`
 * `microsoft`
+* `messenger`
 * `samsung`
 * `whatsapp`
 * `twitter`
@@ -33,3 +34,4 @@ Supported styles:
 * `lg`
 * `htc`
 * `mozilla`
+* `softbank`
