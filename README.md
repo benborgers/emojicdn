@@ -1,5 +1,7 @@
 # EMOJICDN
 
+**Note: this is an branch version of emojicdn that is meant to be deployed on Vercel. The `laravel` branch of this repo is maintained.**
+
 ## Basic usage
 
 Append any emoji to the end of `emojicdn.elk.sh` to get a PNG image:
