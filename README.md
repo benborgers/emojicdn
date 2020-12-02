@@ -27,6 +27,7 @@ Supported styles:
 * `whatsapp`
 * `twitter`
 * `facebook`
+* `messenger`
 * `joypixels`
 * `openmoji`
 * `emojidex`
