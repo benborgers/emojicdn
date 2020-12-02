@@ -17,6 +17,7 @@ class EmojiController extends Controller
         'whatsapp',
         'twitter',
         'facebook',
+        'messenger',
         'joypixels',
         'openmoji',
         'emojidex',
@@ -72,6 +73,14 @@ class EmojiController extends Controller
         $response = $client->get('https://emojipedia.org/' . $encodedEmoji);
         if(! $response->ok()) {
             error('Emojipedia returned an error ' . $response->status(), $response->status());
+        }
+        
+        // Facebook and Messenger emojis are stored in the same 'facebook' directory but
+        // different subdirectories. This helps to distinguish them by renaming $style.
+        if($style == 'facebook') {
+            $style = 'facebook/230'
+        } elseif($style == 'messenger') {
+            $style = 'facebook/65'
         }
 
         $matches = Str::of($response->body())->matchAll("/<img.*(?:src|srcset)=\"(.*?{$style}.*?)\"/");
