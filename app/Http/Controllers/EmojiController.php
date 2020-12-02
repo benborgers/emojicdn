@@ -70,9 +70,9 @@ class EmojiController extends Controller
         // Facebook and Messenger emojis are stored in the same 'facebook' directory but
         // different subdirectories. This helps to distinguish them by renaming $style.
         if($style == 'facebook') {
-            $style = 'facebook/230'
+            $style = 'facebook/230';
         } elseif($style == 'messenger') {
-            $style = 'facebook/65'
+            $style = 'facebook/65';
         }
 
         $matches = Str::of($response->body())->matchAll("/<img.*(?:src|srcset)=\"(.*?{$style}.*?)\"/");
