@@ -26,9 +26,9 @@ class EmojiController extends Controller
         'mozilla'
     ];
 
-    // Epoch timestamp. 
-    // Emojis that were cached after this time are considered "fresh". 
-    // This time can be moved up to force update old cached emojis. 
+    // Epoch timestamp.
+    // Emojis that were cached after this time are considered "fresh".
+    // This time can be moved up to force update old cached emojis.
     public $cacheFreshAfter = 0;
 
     public function show($emoji)
@@ -37,8 +37,8 @@ class EmojiController extends Controller
         $style = request()->query('style', 'apple');
         $hash = md5(implode('.', [$encodedEmoji, $style]));
 
-        // Deletes any items cached before the datatype was an array with a timestamp. 
-        // This check can be removed once all old cached items with no timestamp have expired. 
+        // Deletes any items cached before the datatype was an array with a timestamp.
+        // This check can be removed once all old cached items with no timestamp have expired.
         if($cachedValue = cache()->get($hash)) {
             if(gettype($cachedValue) === 'string') {
                 cache()->forget($hash);
@@ -48,14 +48,14 @@ class EmojiController extends Controller
         $cachedValue = cache()->get($hash);
 
         // We can use the cached value if it exists,
-        // and it was downloaded more recently than the freshness cutoff. 
+        // and it was downloaded more recently than the freshness cutoff.
 
         if($cachedValue && $cachedValue['timestamp'] > $this->cacheFreshAfter) {
             return response(base64_decode($cachedValue['image']))
                 ->header('content-type', 'image/png');
         }
 
-        // If we can't use the cached value: 
+        // If we can't use the cached value:
 
         function error($message, $status) {
             abort(
@@ -74,13 +74,13 @@ class EmojiController extends Controller
         if(! $response->ok()) {
             error('Emojipedia returned an error ' . $response->status(), $response->status());
         }
-        
+
         // Facebook and Messenger emojis are stored in the same 'facebook' directory but
         // different subdirectories. This helps to distinguish them by renaming $style.
         if($style == 'facebook') {
-            $style = 'facebook/230';
+            $style = 'facebook\/230';
         } elseif($style == 'messenger') {
-            $style = 'facebook/65';
+            $style = 'facebook\/65';
         }
 
         $matches = Str::of($response->body())->matchAll("/<img.*(?:src|srcset)=\"(.*?{$style}.*?)\"/");
