@@ -37,14 +37,6 @@ class EmojiController extends Controller
         $style = request()->query('style', 'apple');
         $hash = md5(implode('.', [$encodedEmoji, $style]));
 
-        // Deletes any items cached before the datatype was an array with a timestamp.
-        // This check can be removed once all old cached items with no timestamp have expired.
-        if($cachedValue = cache()->get($hash)) {
-            if(gettype($cachedValue) === 'string') {
-                cache()->forget($hash);
-            }
-        }
-
         $cachedValue = cache()->get($hash);
 
         // We can use the cached value if it exists,
