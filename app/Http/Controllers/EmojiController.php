@@ -93,6 +93,7 @@ class EmojiController extends Controller
         ]);
 
         return response($emojiImage)
-            ->header('content-type', 'image/png');
+            ->header('content-type', 'image/png')
+            ->header('cache-control', 'public, max-age=0, s-maxage=86400');
     }
 }
