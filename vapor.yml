@@ -5,7 +5,7 @@ environments:
         domain: emojicdn.elk.sh
         memory: 1024
         cli-memory: 512
-        runtime: php-7.4:al2
+        runtime: php-8.0:al2
         build:
             - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install --no-dev'
             - 'php artisan event:cache'
