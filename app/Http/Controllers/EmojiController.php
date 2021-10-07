@@ -29,7 +29,7 @@ class EmojiController extends Controller
     // Epoch timestamp.
     // Emojis that were cached after this time are considered "fresh".
     // This time can be moved up to force update old cached emojis.
-    public $cacheFreshAfter = 0;
+    public $cacheFreshAfter = 1633567404;
 
     public function show($emoji)
     {
