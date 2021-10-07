@@ -56,7 +56,7 @@ class EmojiController extends Controller
             );
         }
 
-        $client = Http::timeout(3);
+        $client = Http::timeout(10);
 
         if(! in_array($style, $this->allowedStyles)) {
             error('Invalid style. Valid styles are: ' . implode(', ', $this->allowedStyles), 400);
