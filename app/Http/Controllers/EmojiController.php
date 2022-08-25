@@ -75,7 +75,10 @@ class EmojiController extends Controller
             $style = 'facebook\/65';
         }
 
-        $matches = Str::of($response->body())->matchAll("/<img.*(?:src|srcset)=\"(.*?{$style}.*?)\"/");
+        $matches = Str::of($response->body())
+            ->matchAll("/<img.*(?:src|srcset)=\"(.*?{$style}.*?)\"/")
+            // Emojipedia has some footer images like "/static/img/footer/logo_apple_appstore.svg".
+            ->filter(fn ($string) => !Str::of($string)->contains('static'));
 
         if($matches->isEmpty()) {
             error('Emoji exists, but style couldn’t be found', 404);
