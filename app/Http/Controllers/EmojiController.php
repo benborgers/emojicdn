@@ -13,6 +13,8 @@ class EmojiController extends Controller
         'apple',
         'google',
         'microsoft',
+        'microsoft-3D-fluent'
+        'microsoft-teams'
         'samsung',
         'whatsapp',
         'twitter',
@@ -29,8 +31,8 @@ class EmojiController extends Controller
     // Epoch timestamp.
     // Emojis that were cached after this time are considered "fresh".
     // This time can be moved up to force update old cached emojis.
-    public $cacheFreshAfter = 1633567404;
-
+    public $cacheFreshAfter = 1701388800;
+    
     public function show($emoji)
     {
         $encodedEmoji = urlencode($emoji);
