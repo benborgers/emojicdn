@@ -13,8 +13,8 @@ class EmojiController extends Controller
         'apple',
         'google',
         'microsoft',
-        'microsoft-3D-fluent'
-        'microsoft-teams'
+        'microsoft-3D-fluent',
+        'microsoft-teams',
         'samsung',
         'whatsapp',
         'twitter',
