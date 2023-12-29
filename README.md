@@ -23,6 +23,8 @@ Supported styles:
 * `apple`
 * `google`
 * `microsoft`
+* `microsoft-3d-fluent`
+* `microsoft-teams`
 * `samsung`
 * `whatsapp`
 * `twitter`
