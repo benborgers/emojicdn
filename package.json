@@ -1,0 +1,11 @@
+{
+  "name": "emojicdn",
+  "scripts": {
+    "dev": "wrangler dev index.js"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "devDependencies": {
+    "wrangler": "^3.37.0"
+  }
+}
