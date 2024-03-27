@@ -12,7 +12,6 @@ const signal = async (type, payload) => {
         clientUser: "default",
         type,
         payload,
-        isTestMode: false,
       },
     ]),
   });
