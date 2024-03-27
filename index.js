@@ -43,6 +43,10 @@ const leftPad = (string, length, character) => {
     : new Array(length - string.length + 1).join(character) + string;
 };
 
+const buildRedirectUrl = (folder, path) => {
+  return `https://cdn.jsdelivr.net/gh/iamcal/emoji-data/${folder}/${path}`;
+};
+
 export default {
   async fetch(request) {
     const url = new URL(request.url);
@@ -55,6 +59,13 @@ export default {
 
     if (path === "favicon.ico") {
       return new Response("");
+    }
+
+    if (path === "random") {
+      const randomEmoji = emoji[Math.floor(Math.random() * emoji.length)];
+      return Response.redirect(
+        buildRedirectUrl(STYLE_TO_FOLDER[style], randomEmoji.image)
+      );
     }
 
     if (!ALLOWED_STYLES.includes(style)) {
@@ -85,7 +96,7 @@ export default {
     }
 
     return Response.redirect(
-      `https://cdn.jsdelivr.net/gh/iamcal/emoji-data/${STYLE_TO_FOLDER[style]}/${emojiData.image}`
+      buildRedirectUrl(STYLE_TO_FOLDER[style], emojiData.image)
     );
   },
 };
