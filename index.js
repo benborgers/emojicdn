@@ -11,6 +11,15 @@ for (const e of emojiDataset) {
   }
 }
 
+const ALLOWED_STYLES = ["apple", "google", "facebook", "twitter"];
+
+const STYLE_TO_FOLDER = {
+  apple: "img-apple-160",
+  google: "img-google-136",
+  facebook: "img-facebook-96",
+  twitter: "img-twitter-72",
+};
+
 const leftPad = (string, length, character) => {
   return string.length >= length
     ? string
@@ -21,6 +30,7 @@ export default {
   async fetch(request) {
     const url = new URL(request.url);
     const path = url.pathname.replace(/^\/+|\/+$/g, "");
+    const style = url.searchParams.get("style") ?? "apple";
 
     if (path === "") {
       return Response.redirect("https://github.com/benborgers/emojicdn");
@@ -28,6 +38,13 @@ export default {
 
     if (path === "favicon.ico") {
       return new Response("");
+    }
+
+    if (!ALLOWED_STYLES.includes(style)) {
+      return new Response(
+        "Invalid style. Valid styles are: " + ALLOWED_STYLES.join(", "),
+        { status: 400 }
+      );
     }
 
     const emojiText = decodeURIComponent(path);
@@ -44,7 +61,7 @@ export default {
     }
 
     return Response.redirect(
-      `https://cdn.jsdelivr.net/gh/iamcal/emoji-data/img-apple-160/${emojiData.image}`
+      `https://cdn.jsdelivr.net/gh/iamcal/emoji-data/${STYLE_TO_FOLDER[style]}/${emojiData.image}`
     );
   },
 };
