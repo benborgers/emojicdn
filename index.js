@@ -1,4 +1,14 @@
-import emoji from "./emoji.json";
+import emojiDataset from "./emoji.json";
+
+const emoji = [];
+
+for (const e of emojiDataset) {
+  if (e.skin_variations) {
+    for (const v of Object.values(e.skin_variations)) {
+      emoji.push({ ...e, ...v });
+    }
+  }
+}
 
 const leftPad = (string, length, character) => {
   return string.length >= length
