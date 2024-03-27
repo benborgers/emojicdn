@@ -74,6 +74,9 @@ export default {
     const emojiData = emoji.find(
       (e) =>
         e.unified.toLowerCase() === code.toLowerCase() ||
+        // -feof just means "display as emoji"
+        e.unified.toLowerCase() === code.toLowerCase().replace(/-fe0f$/g, "") ||
+        e.unified.toLowerCase() === code.toLowerCase() + "-fe0f" ||
         e.name.toLowerCase().replace(/ /g, "-") === emojiText.toLowerCase()
     );
 
