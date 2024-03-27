@@ -43,8 +43,8 @@ const leftPad = (string, length, character) => {
     : new Array(length - string.length + 1).join(character) + string;
 };
 
-const buildRedirectUrl = (folder, path) => {
-  return `https://cdn.jsdelivr.net/gh/iamcal/emoji-data/${folder}/${path}`;
+const buildRedirectUrl = (style, path) => {
+  return `https://cdn.jsdelivr.net/gh/iamcal/emoji-data/${STYLE_TO_FOLDER[style]}/${path}`;
 };
 
 export default {
@@ -63,9 +63,7 @@ export default {
 
     if (path === "random") {
       const randomEmoji = emoji[Math.floor(Math.random() * emoji.length)];
-      return Response.redirect(
-        buildRedirectUrl(STYLE_TO_FOLDER[style], randomEmoji.image)
-      );
+      return Response.redirect(buildRedirectUrl(style, randomEmoji.image));
     }
 
     if (!ALLOWED_STYLES.includes(style)) {
@@ -95,8 +93,6 @@ export default {
       return new Response("Emoji not found", { status: 404 });
     }
 
-    return Response.redirect(
-      buildRedirectUrl(STYLE_TO_FOLDER[style], emojiData.image)
-    );
+    return Response.redirect(buildRedirectUrl(style, emojiData.image));
   },
 };
