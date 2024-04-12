@@ -1,22 +1,5 @@
 import emojiDataset from "./emoji.json";
 
-const signal = async (type, payload) => {
-  await fetch("https://nom.telemetrydeck.com/v2/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify([
-      {
-        appID: "A6A644A4-1CAC-4269-8090-37B2EA3DD238",
-        clientUser: "default",
-        type,
-        payload,
-      },
-    ]),
-  });
-};
-
 const emoji = [];
 
 for (const e of emojiDataset) {
@@ -77,7 +60,6 @@ export default {
     }
 
     if (!ALLOWED_STYLES.includes(style)) {
-      await signal("invalid_style", { style });
       return new Response(
         "Invalid style. Valid styles are: " + ALLOWED_STYLES.join(", "),
         { status: 400 }
@@ -99,7 +81,6 @@ export default {
     );
 
     if (!emojiData) {
-      await signal("emoji_not_found", { emoji: emojiText });
       return new Response("Emoji not found", { status: 404 });
     }
 
