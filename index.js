@@ -47,6 +47,16 @@ const buildRedirectUrl = (style, path) => {
   return `https://cdn.jsdelivr.net/gh/iamcal/emoji-data/${STYLE_TO_FOLDER[style]}/${path}`;
 };
 
+const redirect = (url) => {
+  return new Response("", {
+    status: 302,
+    headers: {
+      Location: url,
+      "Access-Control-Allow-Origin": "*",
+    },
+  });
+};
+
 export default {
   async fetch(request) {
     const url = new URL(request.url);
@@ -54,7 +64,7 @@ export default {
     const style = url.searchParams.get("style") ?? "apple";
 
     if (path === "") {
-      return Response.redirect("https://github.com/benborgers/emojicdn");
+      return redirect("https://github.com/benborgers/emojicdn");
     }
 
     if (path === "favicon.ico") {
@@ -63,7 +73,7 @@ export default {
 
     if (path === "random") {
       const randomEmoji = emoji[Math.floor(Math.random() * emoji.length)];
-      return Response.redirect(buildRedirectUrl(style, randomEmoji.image));
+      return redirect(buildRedirectUrl(style, randomEmoji.image));
     }
 
     if (!ALLOWED_STYLES.includes(style)) {
@@ -93,6 +103,6 @@ export default {
       return new Response("Emoji not found", { status: 404 });
     }
 
-    return Response.redirect(buildRedirectUrl(style, emojiData.image));
+    return redirect(buildRedirectUrl(style, emojiData.image));
   },
 };
