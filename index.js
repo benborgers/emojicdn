@@ -36,6 +36,7 @@ const redirect = (url) => {
     headers: {
       Location: url,
       "Access-Control-Allow-Origin": "*",
+      "Cache-Control": "public, max-age=86400",
     },
   });
 };
