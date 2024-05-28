@@ -30,13 +30,29 @@ const buildRedirectUrl = (style, path) => {
   return `https://cdn.jsdelivr.net/gh/iamcal/emoji-data/${STYLE_TO_FOLDER[style]}/${path}`;
 };
 
-const redirect = (url) => {
+const ONE_WEEK = 60 * 60 * 24 * 7;
+const ONE_MONTH = 60 * 60 * 24 * 30;
+
+const redirect = (url: string) => {
   return new Response("", {
     status: 302,
     headers: {
       Location: url,
       "Access-Control-Allow-Origin": "*",
       "Cache-Control": `public, max-age=${60 * 60 * 24 * 7}`,
+    },
+  });
+};
+
+const respondWithImage = async (url: string, random = false) => {
+  const image = await fetch(url);
+  return new Response(image.body, {
+    headers: {
+      "Content-Type": "image/png",
+      "Access-Control-Allow-Origin": "*",
+      "Cache-Control": random
+        ? "public, s-maxage=0, max-age=0"
+        : `public, s-maxage=${ONE_MONTH}, max-age=${ONE_WEEK}`,
     },
   });
 };
@@ -57,7 +73,7 @@ export default {
 
     if (path === "random") {
       const randomEmoji = emoji[Math.floor(Math.random() * emoji.length)];
-      return redirect(buildRedirectUrl(style, randomEmoji.image));
+      return respondWithImage(buildRedirectUrl(style, randomEmoji.image), true);
     }
 
     if (!ALLOWED_STYLES.includes(style)) {
@@ -85,6 +101,6 @@ export default {
       return new Response("Emoji not found", { status: 404 });
     }
 
-    return redirect(buildRedirectUrl(style, emojiData.image));
+    return respondWithImage(buildRedirectUrl(style, emojiData.image));
   },
 };
