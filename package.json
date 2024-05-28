@@ -4,5 +4,8 @@
   "license": "ISC",
   "scripts": {
     "dev": "bun --watch run index.ts"
+  },
+  "dependencies": {
+    "is-even": "^1.0.0"
   }
 }
