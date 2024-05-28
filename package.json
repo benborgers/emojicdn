@@ -1,11 +1,8 @@
 {
   "name": "emojicdn",
-  "scripts": {
-    "dev": "bun --watch run index.ts"
-  },
   "keywords": [],
   "license": "ISC",
-  "devDependencies": {
-    "wrangler": "^3.37.0"
+  "scripts": {
+    "dev": "bun --watch run index.ts"
   }
 }
