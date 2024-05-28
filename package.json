@@ -1,8 +1,7 @@
 {
   "name": "emojicdn",
   "scripts": {
-    "dev": "wrangler dev index.js",
-    "deploy": "wrangler deploy index.js --compatibility-date 2024-03-26 --name emojicdn"
+    "dev": "bun --watch run index.ts"
   },
   "keywords": [],
   "license": "ISC",

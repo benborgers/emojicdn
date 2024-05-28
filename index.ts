@@ -1,6 +1,6 @@
 import emojiDataset from "./emoji.json";
 
-const emoji = [];
+const emoji: (typeof emojiDataset)[number][] = [];
 
 for (const e of emojiDataset) {
   emoji.push(e);
@@ -69,7 +69,7 @@ export default {
 
     const emojiText = decodeURIComponent(path);
     const code = Array.from(emojiText)
-      .map((char) => leftPad(char.codePointAt(0).toString(16), 4, "0"))
+      .map((char) => leftPad(char.codePointAt(0)!.toString(16), 4, "0"))
       .join("-");
 
     const emojiData = emoji.find(
