@@ -1,4 +1,4 @@
-console.log("Starting");
+console.log("Starting", Bun.env.PORT);
 
 import emojiDataset from "./emoji.json";
 
