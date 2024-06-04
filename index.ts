@@ -1,5 +1,3 @@
-console.log("Starting", Bun.env.PORT);
-
 import emojiDataset from "./emoji.json";
 
 const emoji: (typeof emojiDataset)[number][] = [];
@@ -58,7 +56,7 @@ const respondWithImage = async (url: string, random = false) => {
   });
 };
 
-const server = Bun.serve({
+export default {
   async fetch(request) {
     console.log("request", request.url);
     const url = new URL(request.url);
@@ -105,6 +103,4 @@ const server = Bun.serve({
 
     return respondWithImage(buildRedirectUrl(style, emojiData.image));
   },
-});
-
-console.log({ port: server });
+};
