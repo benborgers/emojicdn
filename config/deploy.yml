@@ -72,6 +72,7 @@ registry:
 healthcheck:
   path: /random
   port: 3000
+  max_attempts: 30
   log_lines: 1000
 # Bridge fingerprinted assets, like JS and CSS, between versions to avoid
 # hitting 404 on in-flight requests. Combines all files from new and old
