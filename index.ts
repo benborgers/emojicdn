@@ -58,7 +58,6 @@ const respondWithImage = async (url: string, random = false) => {
 
 export default {
   async fetch(request) {
-    console.log("request", request.url);
     const url = new URL(request.url);
     const path = url.pathname.replace(/^\/+|\/+$/g, "");
     const style = url.searchParams.get("style") ?? "apple";
