@@ -1,3 +1,5 @@
+console.log("Starting");
+
 import emojiDataset from "./emoji.json";
 
 const emoji: (typeof emojiDataset)[number][] = [];
