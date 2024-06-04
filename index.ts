@@ -107,4 +107,4 @@ const server = Bun.serve({
   },
 });
 
-console.log({ port: server.port });
+console.log({ port: server });
