@@ -28,3 +28,7 @@ Supported styles:
 ## Implementation
 
 - `emoji.json` from: https://github.com/iamcal/emoji-data/blob/master/emoji.json
+
+## Hosting
+
+emojicdn is hosted on [Hetzner](https://hetzner.com) with [Kamal](https://kamal-deploy.org). To deploy a new version, run `kamal deploy`.
