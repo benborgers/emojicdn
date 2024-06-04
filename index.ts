@@ -58,7 +58,7 @@ const respondWithImage = async (url: string, random = false) => {
   });
 };
 
-export default {
+const server = Bun.serve({
   async fetch(request) {
     const url = new URL(request.url);
     const path = url.pathname.replace(/^\/+|\/+$/g, "");
@@ -104,4 +104,6 @@ export default {
 
     return respondWithImage(buildRedirectUrl(style, emojiData.image));
   },
-};
+});
+
+console.log({ port: server.port });
